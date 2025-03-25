@@ -6,11 +6,15 @@ import SurveyList from './pages/surveys/SurveyList';
 import SurveyBuilder from './pages/surveys/SurveyBuilder';
 import SurveyResponse from './pages/surveys/SurveyResponse';
 import Analytics from './pages/Analytics';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="surveys" element={<SurveyList />} />
