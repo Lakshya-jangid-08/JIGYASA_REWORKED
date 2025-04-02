@@ -1,8 +1,9 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import SurveySerializer
+from .serializers import SurveySerializer, QuestionSerializer
 from rest_framework import generics
-from .models import Survey
+from rest_framework.generics import RetrieveAPIView
+from .models import Survey, Question
 from .serializers import SurveySerializer
 from django.shortcuts import render
 # from jigyasa_survey.models import Survey, Question  # Replace with your actual app name
@@ -19,14 +20,14 @@ class SurveyCreateView(generics.CreateAPIView):
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(['POST'])
-# def create_survey(request):
-#     print("Received Data:", request.data)  # Debugging
-#     serializer = SurveySerializer(data=request.data)
+class SurveyDetailView(RetrieveAPIView):
+    queryset = Survey.objects.all()
+    serializer_class = SurveySerializer
+    lookup_field = 'id'
 
-#     if serializer.is_valid():
-#         serializer.save()
-#         return Response({"message": "Survey created successfully!", "data": serializer.data}, status=201)
-#     else:
-#         print("Errors:", serializer.errors)  # Debugging
-#         return Response(serializer.errors, status=400)
+    def get(self, request, *args, **kwargs):
+        survey = self.get_object()
+        questions = Question.objects.filter(survey=survey)
+        survey_data = self.get_serializer(survey).data
+        survey_data['questions'] = QuestionSerializer(questions, many=True).data
+        return Response(survey_data)

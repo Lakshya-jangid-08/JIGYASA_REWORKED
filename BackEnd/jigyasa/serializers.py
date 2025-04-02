@@ -10,7 +10,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 # Survey Serializer
 class SurveySerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True, required=False)
+    questions = QuestionSerializer(many=True, read_only=True, source='question_set')
     created_by = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())  # Fix here
 
     class Meta:
