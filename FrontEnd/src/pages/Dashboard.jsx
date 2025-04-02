@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PlusCircle, ClipboardList, Users, BarChart3 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const Dashboard = () => {
+  const { user } = useAuth();
+
   const stats = [
     { name: 'Total Surveys', value: '12', icon: ClipboardList },
     { name: 'Total Responses', value: '2,345', icon: Users },
@@ -10,8 +13,24 @@ const Dashboard = () => {
   ];
 
   return (
-    <div>
-      <div className="sm:flex sm:items-center sm:justify-between">
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Welcome, {user?.username}!</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h2 className="text-xl font-semibold mb-2">Total Surveys</h2>
+          <p className="text-3xl font-bold text-indigo-600">0</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h2 className="text-xl font-semibold mb-2">Active Surveys</h2>
+          <p className="text-3xl font-bold text-green-600">0</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h2 className="text-xl font-semibold mb-2">Total Responses</h2>
+          <p className="text-3xl font-bold text-blue-600">0</p>
+        </div>
+      </div>
+
+      <div className="sm:flex sm:items-center sm:justify-between mt-8">
         <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
         <Link
           to="/surveys/new"
