@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LoginForm from '../components/auth/LoginForm';
+import LoginForm from '../../components/auth/LoginForm';
 
 const Login = () => {
   return (
@@ -26,4 +26,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login; 
